@@ -13,13 +13,26 @@ namespace AnonymousTypes
 
             // Now show the color and make.
             Console.WriteLine("My car is a {0} {1}.", myCar.Color, myCar.Make);
-
             // Now call our helper method to build anonymous type via args.
             BuildAnonType("BMW", "Black", 90);
+            Console.WriteLine();
 
             // Reflect over what the compiler generated.
             ReflectOverAnonymousType(myCar);
+            Console.WriteLine();
 
+            Console.WriteLine("Calling EqualityTest()...");
+            EqualityTest();
+            Console.WriteLine();
+
+            // Make an anonymous type that is composed of another.
+            var purchaseItem = new
+            {
+                TimeBought = DateTime.Now,
+                ItemBought = new { Color = "Red", Make = "Saab", CurrentSpeed = 55 },
+                Price = 34.000
+            };
+            ReflectOverAnonymousType(purchaseItem);
             Console.ReadLine();
         }
 
@@ -42,6 +55,36 @@ namespace AnonymousTypes
             Console.WriteLine("obj.ToString() == {0}", obj.ToString());
             Console.WriteLine("obj.GetHashCode() == {0}", obj.GetHashCode());
             Console.WriteLine();
+        }
+
+        static void EqualityTest()
+        {
+            // Make 2 anonymous classes with identical name/value pairs.
+            var firstCar = new { Color = "Bright Pink", Make = "Saab", CurrentSpeed = 55 };
+            var secondCar = new { Color = "Bright Pink", Make = "Saab", CurrentSpeed = 55 };
+
+            // Are they considered equal when using Equals()?
+            if (firstCar.Equals(secondCar))
+                Console.WriteLine("Same anonymous object!");
+            else
+                Console.WriteLine("Not the same anonymous object!");
+
+            // Are they considered equal when using ==?
+            if (firstCar == secondCar)
+                Console.WriteLine("Same anonymous object!");
+            else
+                Console.WriteLine("Not the same anonymous object!");
+
+            // Are these objects the same underlying type?
+            if (firstCar.GetType().Name == secondCar.GetType().Name)
+                Console.WriteLine("We are both the same type!");
+            else
+                Console.WriteLine("We are different types!");
+
+            Console.WriteLine();
+            ReflectOverAnonymousType(firstCar);
+            ReflectOverAnonymousType(secondCar);
+
         }
 
     }
