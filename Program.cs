@@ -17,6 +17,9 @@ namespace AnonymousTypes
             // Now call our helper method to build anonymous type via args.
             BuildAnonType("BMW", "Black", 90);
 
+            // Reflect over what the compiler generated.
+            ReflectOverAnonymousType(myCar);
+
             Console.ReadLine();
         }
 
@@ -31,5 +34,15 @@ namespace AnonymousTypes
             // Anon types have custom implementations of each virtual method of System.Object. For example:
             Console.WriteLine("ToString() == {0}", car.ToString());
         }
+
+        static void ReflectOverAnonymousType(object obj)
+        {
+            Console.WriteLine("obj is an instance of: {0}", obj.GetType().Name);
+            Console.WriteLine("Base class of {0} is {1}", obj.GetType().Name, obj.GetType().BaseType);
+            Console.WriteLine("obj.ToString() == {0}", obj.ToString());
+            Console.WriteLine("obj.GetHashCode() == {0}", obj.GetHashCode());
+            Console.WriteLine();
+        }
+
     }
 }
